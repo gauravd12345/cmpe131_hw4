@@ -1,8 +1,10 @@
 def cacti_number(plot):
+    # ---- Input validation (shape & values only) ----
     if not isinstance(plot, list):
         raise TypeError("Input must be a list of lists.")
     if len(plot) == 0:
         raise ValueError("Plot must not be empty.")
+
     row_len = None
     for row in plot:
         if not isinstance(row, list):
@@ -19,19 +21,8 @@ def cacti_number(plot):
 
     r, c = len(plot), row_len
 
-    def has_adjacent_one(i, j):
-        return (
-            (i > 0 and plot[i-1][j] == 1) or
-            (i+1 < r and plot[i+1][j] == 1) or
-            (j > 0 and plot[i][j-1] == 1) or
-            (j+1 < c and plot[i][j+1] == 1)
-        )
-
-    for i in range(r):
-        for j in range(c):
-            if plot[i][j] == 1 and has_adjacent_one(i, j):
-                raise ValueError("Input plot has adjacent cacti.")
-
+    # ---- Greedy placement: scan top-left to bottom-right ----
+    # Work on a copy so we can place new cacti as 1's
     grid = [row[:] for row in plot]
     added = 0
 
