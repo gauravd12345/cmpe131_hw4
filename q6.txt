@@ -1,0 +1,5 @@
+1. The change inside increment_int_a does NOT change the variable a after the function call.
+
+2. The change inside increment_int_b DOES change the variable b after the function call.
+
+3. They differ because integers in Python are immutable, so when someval += 1 is executed, it creates a new integer object instead of modifying the original. Dictionaries, however, are mutable objects, so modifying an element inside the dictionary (someval['32'] += 1) affects the original dictionary that was passed to the function.
